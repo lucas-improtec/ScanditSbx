@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:scanditCore="clr-namespace:Scandit.DataCapture.Core.UI.Unified;assembly=ScanditCaptureCoreUnified"
+             xmlns:scanditBarcode="clr-namespace:Scandit.DataCapture.Barcode.UI.Unified;assembly=ScanditBarcodeCaptureUnified"
+             xmlns:scanditTracking="clr-namespace:Scandit.DataCapture.Barcode.Tracking.UI.Unified;assembly=ScanditBarcodeCaptureUnified"
+             xmlns:viewModel="clr-namespace:ScanditSbx.ViewModels;assembly=ScanditSbx"
+             x:Class="ScanditSbx.Views.MainPage">
+    <ContentPage.BindingContext>
+        <viewModel:ScannerViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Close Scan"
+                     IconImageSource="scan-simple.png"
+                     Order="Primary"
+                     Priority="0" 
+                     IsEnabled="{Binding ShowScanner}"
+                     Command="{Binding CloseScanClicked}"/>
+        <ToolbarItem Text="Scan Simple"
+                     IconImageSource="scan-simple.png"
+                     Order="Primary"
+                     Priority="0" 
+                     Command="{Binding ScanSimpleClicked}"/>
+        <ToolbarItem Text="Scan Multiple"
+                     IconImageSource="scan-multiple.png"
+                     Order="Primary"
+                     Priority="0" 
+                     Command="{Binding ScanMultipleClicked}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <!--
+        <StackLayout>
+            <Label Text="Teste:"></Label>
+            <Label Text="ScanSimpleClicked!" IsVisible="{Binding ShowBarcodeCaptureLayout}"></Label>
+            <Label Text="ScanMultipleClicked!" IsVisible="{Binding ShowTrackingBarcodeLayout}"></Label>
+        </StackLayout>
+        -->
+        <AbsoluteLayout>
+            <scanditCore:DataCaptureView 
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                DataCaptureContext="{Binding DataCaptureContext}"
+                IsVisible="{Binding ShowScanner}">
+                <!-- Add a barcode tracking basic overlay to the data capture view to render the tracked barcodes on top of the video
+                     preview. This is optional, but recommended for better visual feedback. -->
+                <scanditTracking:BarcodeTrackingBasicOverlay
+                    BarcodeTracking="{Binding BarcodeTracking}" 
+                    Listener="{Binding .}"
+                    Style="Frame"
+                    IsVisible="{Binding ShowTrackingBarcodeLayout}"/>
+                <scanditBarcode:BarcodeCaptureOverlay 
+                    BarcodeCapture="{Binding BarcodeCapture}" 
+                    Viewfinder="{Binding Viewfinder}"
+                    Style="Frame"
+                    IsVisible="{Binding ShowBarcodeCaptureLayout}" />
+            </scanditCore:DataCaptureView>
+            <Button Text="DONE"
+                    AbsoluteLayout.LayoutBounds="0.5,0.9,300,45"
+                    AbsoluteLayout.LayoutFlags="PositionProportional"
+                    BackgroundColor="#58B5C2"
+                    TextColor="White" 
+                    Clicked="ButtonClicked"
+                    IsVisible="{Binding ShowScanner}"/>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

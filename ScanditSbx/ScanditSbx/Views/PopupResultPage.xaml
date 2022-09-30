@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+     xmlns="http://xamarin.com/schemas/2014/forms"
+     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+     xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+     x:Class="ScanditSbx.Views.PopupResultPage">
+    <!--You can set an animation in the xaml file or in the csharp code behind-->
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation 
+            PositionIn="Center"
+            PositionOut="Center"
+            ScaleIn="1.2"
+            ScaleOut="0.8"
+            DurationIn="200"
+            DurationOut="200"
+            EasingIn="SinOut"
+            EasingOut="SinIn"
+            HasBackgroundAnimation="True"/>
+    </pages:PopupPage.Animation>
+    <!--You can use any elements here which are extended from Xamarin.Forms.View-->
+    <StackLayout 
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" 
+        Padding="20, 20, 20, 20"
+        BackgroundColor="White">
+        <ListView ItemsSource="{Binding AdditiveScanResults}"
+                  AbsoluteLayout.LayoutBounds="0,0,1,1"
+                  AbsoluteLayout.LayoutFlags="All"
+                  HorizontalScrollBarVisibility="Never"
+                  VerticalScrollBarVisibility="Default"
+                  SelectionMode="None"
+                  SeparatorVisibility="Default"
+                  HasUnevenRows="True"
+                  VerticalOptions="StartAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" Padding="15, 15, 15, 5">
+                            <Label Text="{Binding Data}" FontSize="Medium" TextColor="Black" />
+                            <Label Text="{Binding Symbology}" FontSize="Small" TextColor="#58B5C2" />
+                            <Button Text="Remove Barcode" Clicked="RemoveElement" BindingContext="{Binding Id}"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="Adicionar mais códigos"
+                Clicked="AddButtonClicked"
+                AbsoluteLayout.LayoutBounds="0.5,0.9,300,45"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="#58B5C2"
+                TextColor="White" />
+        <Button Text="Pesquisar"
+                Clicked="SearchButtonClicked"
+                AbsoluteLayout.LayoutBounds="0.5,0.9,300,45"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                BackgroundColor="#FF6633"
+                TextColor="White" />
+    </StackLayout>
+</pages:PopupPage>
